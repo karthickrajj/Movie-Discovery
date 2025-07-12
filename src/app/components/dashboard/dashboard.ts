@@ -15,6 +15,7 @@ movies:any = [];
   constructor(private movieService: MovieService) {}
 
   loadCategory(category: string) {
+    debugger;
     this.movies = this.movieService.getMoviesByCategory(category);
   }
 }

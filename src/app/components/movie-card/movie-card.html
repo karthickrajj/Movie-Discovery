@@ -3,7 +3,7 @@
   <div class="card-body">
     <h6 class="card-title">{{ movie.title }}</h6>
     <p class="card-text text-muted">{{ movie.release_date.split('-')[0] }}</p>
-    <p><img src="assets/logo.png" alt="Rating" class="star-icon me-1" /> {{ movie.vote_average }}</p>
+    <p><i class="fas fa-star" style="color: gold;"></i> {{ movie.vote_average }}</p>
     <a [routerLink]="['/movie', movie.id]" class="btn btn-outline-primary btn-sm">View Details</a>
   </div>
 </div>
