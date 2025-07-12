@@ -1,0 +1,56 @@
+/* Modern gradient navbar background */
+.custom-navbar {
+  /* background: linear-gradient(90deg, #4facfe, #00f2fe); blue to cyan */
+  /* background: linear-gradient(90deg, #4e54c8, #8f94fb); */
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+
+
+  border-radius: 0 0 15px 15px;
+}
+
+/* Navbar brand logo animation */
+.logo {
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: white;
+  transition: transform 0.3s ease;
+}
+.logo:hover {
+  transform: scale(1.1);
+}
+
+/* Nav links style */
+.navbar-nav .nav-link {
+  color: white;
+  font-weight: 500;
+  position: relative;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+/* Underline animation on hover */
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Active route style */
+.active-link {
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+}
+
+/* Mobile toggler icon color override */
+.navbar-light .navbar-toggler {
+  border-color: rgba(255,255,255,0.5);
+}

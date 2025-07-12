@@ -1,0 +1,15 @@
+<div class="container text-center my-5">
+  <h1 class="display-4">What Should I Watch Tonight?</h1>
+  <p class="lead">Discover movies that suit your mood!</p>
+  <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+    <button class="btn btn-primary btn-lg" (click)="loadCategory('Feel Good')">Feel Good</button>
+    <button class="btn btn-danger btn-lg" (click)="loadCategory('Action Fix')">Action Fix</button>
+    <button class="btn btn-dark btn-lg" (click)="loadCategory('Mind Benders')">Mind Benders</button>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-3 mb-4" *ngFor="let movie of movies">
+      <app-movie-card [movie]="movie"></app-movie-card>
+    </div>
+  </div>
+</div>

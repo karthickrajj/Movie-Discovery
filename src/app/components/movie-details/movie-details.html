@@ -1,0 +1,26 @@
+<div class="container my-5" *ngIf="movie">
+  <div class="row">
+    <div class="col-md-4">
+      <img [src]="movie.poster_path" class="img-fluid rounded">
+    </div>
+    <div class="col-md-8">
+      <h2>{{ movie.title }}</h2>
+      <p><strong>Release:</strong> {{ movie.release_date }}</p>
+      <p><strong>Rating:</strong>  {{ movie.vote_average }}</p>
+      <p>{{ movie.overview }}</p>
+
+      <h4 class="mt-4">Cast</h4>
+      <div class="d-flex flex-wrap gap-2">
+        <span *ngFor="let actor of movie.cast">{{ actor }}</span>
+      </div>
+
+      <h4 class="mt-4">Similar Movies</h4>
+      <div class="row">
+        <div class="col-md-3" *ngFor="let sim of similarMovies">
+          <app-movie-card [movie]="sim"></app-movie-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>

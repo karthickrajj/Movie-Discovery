@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+
+@media (max-width: 768px) {
+  .card img {
+    height: 200px;
+  }
+
+  button.btn-lg {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(-45deg, #1b1e3a, #2c5364, #0f2027, #203a43);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  min-height: 100vh;
+  color: white;
+}
+
+/* animate the gradient */
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+a:hover{
+    cursor: pointer;
+}
