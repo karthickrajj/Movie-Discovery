@@ -1,29 +1,66 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MOVIES } from '../data';
+import { Movie } from '../data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
+  private apiUrl = 'https://api.themoviedb.org/3';
+
+  constructor(private http: HttpClient) {}
+
+  // 🔥 Local fallback
   movies = MOVIES;
 
+  // 🔥 GET by Category (still from local for demo)
+  // getMoviesByCategory(category: string): Observable<Movie[]> {
+  //   return of(this.movies.filter(m => m.genre === category));
+  // }
   getMoviesByCategory(category: string) {
-    return this.movies.filter(m => m.genre === category);
-  }
+  // simple mapping - adjust these IDs as needed from TMDB genre list
+  const genreMap: { [key: string]: number } = {
+    'Feel Good': 35,     // Comedy
+    'Action Fix': 28,     // Action
+    'Mind Benders': 9648  // Mystery
+  };
+  const genreId = genreMap[category];
 
-  searchMovies(query: string) {
-    query = query.toLowerCase();
-    return this.movies.filter(m =>
-      m.title.toLowerCase().includes(query) ||
-      m.cast.some(actor => actor.toLowerCase().includes(query))
+  return this.http.get<any>(`${this.apiUrl}/discover/movie?with_genres=${genreId}`)
+    .pipe(map(response => response.results));
+}
+
+  // 🔥 SEARCH from TMDB API
+  searchMovies(query: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/search/movie`, {
+      params: { query }
+    }).pipe(
+      map(res => res.results)
     );
   }
 
-  getMovieById(id: number) {
+  // 🔥 GET Movie Details by ID
+  getMovieById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/movie/${id}`);
+  }
+
+  // 🔥 GET Similar Movies by Movie ID
+  getSimilarMovies(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/movie/${id}/similar`).pipe(
+      map(res => res.results)
+    );
+  }
+
+  // 🔥 If you want fallback local by ID
+  getLocalMovieById(id: number): Movie | undefined {
     return this.movies.find(m => m.id === id);
   }
 
-  getSimilarMovies(similarIds: number[]) {
+  // 🔥 If you want fallback local for similar
+  getLocalSimilarMovies(similarIds: number[]): Movie[] {
     return this.movies.filter(m => similarIds.includes(m.id));
   }
 }

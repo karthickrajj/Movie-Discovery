@@ -1,18 +1,12 @@
 <div class="container mt-4">
-  <!-- <input type="text" class="form-control" placeholder="Search movies or actors..." [(ngModel)]="query" (keyup.enter)="search()" /> -->
-  <input type="text" class="form-control"
-  placeholder="Search movies or actors..."
-  [(ngModel)]="query"
-  (keyup.enter)="search()"
-  (input)="search()" 
-/>
+  <div class="input-group mb-3">
+    <input type="text" [(ngModel)]="query" class="form-control" placeholder="Search for movies...">
+    <button class="btn btn-primary" (click)="search()">Search</button>
+  </div>
 
-  <div class="mt-4" *ngIf="results.length">
-    <h4>Search Results</h4>
-    <div class="row">
-      <div class="col-md-3 mb-4" *ngFor="let movie of results">
-        <app-movie-card [movie]="movie"></app-movie-card>
-      </div>
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let movie of searchResults">
+      <app-movie-card [movie]="movie"></app-movie-card>
     </div>
   </div>
 </div>

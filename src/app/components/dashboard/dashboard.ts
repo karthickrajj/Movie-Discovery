@@ -5,17 +5,20 @@ import { MovieCard } from '../movie-card/movie-card';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule,MovieCard],
+  standalone: true,
+  imports: [CommonModule, MovieCard],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
 export class Dashboard {
-movies:any = [];
+  movies: any[] = [];
 
   constructor(private movieService: MovieService) {}
 
   loadCategory(category: string) {
-    debugger;
-    this.movies = this.movieService.getMoviesByCategory(category);
+    this.movieService.getMoviesByCategory(category).subscribe(results => {
+      this.movies = results;
+      console.log('Movies for category:', category, results);
+    });
   }
 }

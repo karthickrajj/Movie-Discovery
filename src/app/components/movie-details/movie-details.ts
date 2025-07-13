@@ -19,10 +19,19 @@ movie: any;
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.movie = this.movieService.getMovieById(id);
-    console.log('movieee',this.movie)
-    if (this.movie) {
-      this.similarMovies = this.movieService.getSimilarMovies(this.movie.similar);
-    }
+    this.loadMovie(id);
+  }
+
+  loadMovie(id: number) {
+    this.movieService.getMovieById(id).subscribe(movie => {
+      this.movie = movie;
+      this.loadSimilar(id);
+    });
+  }
+
+  loadSimilar(id: number) {
+    this.movieService.getSimilarMovies(id).subscribe(movies => {
+      this.similarMovies = movies;
+    });
   }
 }

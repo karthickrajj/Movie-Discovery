@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MovieCard } from './movie-card';
-import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
+import { RouterLinkWithHref } from '@angular/router';
 
 describe('MovieCard', () => {
   let component: MovieCard;
   let fixture: ComponentFixture<MovieCard>;
 
- beforeEach(async () => {
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
-  imports: [
-    MovieCard,
-    RouterTestingModule.withRoutes([]) // so routerLink is available
-  ]
-}).compileComponents();
+      imports: [
+        MovieCard,
+        RouterTestingModule.withRoutes([])
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MovieCard);
     component = fixture.componentInstance;
@@ -23,7 +23,8 @@ describe('MovieCard', () => {
       title: 'The Happy Times',
       release_date: '2021-07-12',
       vote_average: 7.8,
-      poster_path: '/assets/happy-times.png'
+      poster_path: '/assets/happy-times.png',
+      overview: 'Some overview'
     };
     fixture.detectChanges();
   });
@@ -37,8 +38,11 @@ describe('MovieCard', () => {
     expect(titleEl.textContent).toContain('The Happy Times');
   });
 
-  it('should have router link element', () => {
-  const link = fixture.nativeElement.querySelector('a');
-  expect(link?.textContent?.toLowerCase()).toContain('view');
+  it('should have a router link element with /movie/:id', () => {
+  const linkDes = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
+  expect(linkDes.length).toBeGreaterThan(0);
+
+  const routerLinkInstance = linkDes[0].injector.get(RouterLinkWithHref);
+  expect(routerLinkInstance.href).toContain('/movie/1');
 });
 });
