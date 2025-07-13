@@ -4,12 +4,12 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MOVIES } from '../data';
 import { Movie } from '../data';
+import { environment } from '../environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
-  private apiUrl = 'https://api.themoviedb.org/3';
 
   constructor(private http: HttpClient) {}
 
@@ -29,13 +29,13 @@ export class MovieService {
   };
   const genreId = genreMap[category];
 
-  return this.http.get<any>(`${this.apiUrl}/discover/movie?with_genres=${genreId}`)
+  return this.http.get<any>(`${environment.apiUrl}/discover/movie?with_genres=${genreId}`)
     .pipe(map(response => response.results));
 }
 
   // 🔥 SEARCH from TMDB API
   searchMovies(query: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/search/movie`, {
+    return this.http.get<any>(`${environment.apiUrl}/search/movie`, {
       params: { query }
     }).pipe(
       map(res => res.results)
@@ -44,12 +44,12 @@ export class MovieService {
 
   // 🔥 GET Movie Details by ID
   getMovieById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/movie/${id}`);
+    return this.http.get<any>(`${environment.apiUrl}/movie/${id}`);
   }
 
   // 🔥 GET Similar Movies by Movie ID
   getSimilarMovies(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/movie/${id}/similar`).pipe(
+    return this.http.get<any>(`${environment.apiUrl}/movie/${id}/similar`).pipe(
       map(res => res.results)
     );
   }

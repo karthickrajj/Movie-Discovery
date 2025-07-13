@@ -1,183 +1,160 @@
-# MovieDiscovery
+# 🎬 MovieDiscovery
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
+A simple Angular application to discover movies.  
+It uses The Movie Database (TMDb) API, integrates with Bootstrap for responsive design, and includes unit tests with Jasmine + Karma.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Features
 
-```bash
-ng serve
-```
+✅ Search for movies by title or actor  
+✅ Display movie cards with title, overview, and poster  
+✅ Navigate to detailed movie views  
+✅ Responsive UI using Bootstrap  
+✅ Unit tests with Jasmine & Karma  
+✅ Hard-coded API Authorization via Angular HTTP Interceptor
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-
-
-This is an Angular application called Movie Discovery.
-It allows users to:
-
-View a navbar with links to Home & Search.
-
-Search for movies by title or actor.
-
-Display movie cards with details like title, rating, and poster.
-
-Navigate to detailed movie views.
-
-Has responsive design with Bootstrap.
-
-Includes unit tests using Jasmine & Karma.
-
- Project Structure
+## 📁 Project Structure
 
 movie-discovery/
 ├── src/
-│   ├── app/
-│   │   ├── components/
-│   │   │   ├── movie-search/
-│   │   │   ├── movie-card/
-│   │   │   └── movie-details/
-│   │   ├── services/
-│   │   │   └── movie-service.ts
-│   │   ├── data/
-│   │   │   └── movies.ts
-│   │   ├── app.routes.ts
-│   │   ├── app.component.ts
-│   │   ├── app.component.html
-│   │   └── app.component.spec.ts
-│   ├── assets/
-│   │   ├── happy-times.png
-│   │   ├── fast-strike.jpg
-│   │   └── fast&f.jpg
-│   └── styles.css
+│ ├── app/
+│ │ ├── components/
+│ │ │ ├── movie-search/
+│ │ │ ├── movie-card/
+│ │ │ └── movie-details/
+│ │ ├── services/
+│ │ │ └── movie-service.ts
+│ │ ├── data/
+│ │ │ └── movies.ts
+│ │ ├── app.routes.ts
+│ │ ├── app.component.ts / html / spec.ts
+│ ├── assets/
+│ │ ├── happy-times.png
+│ │ ├── fast-strike.jpg
+│ │ └── fast&f.jpg
+│ └── styles.css
 ├── angular.json
 ├── package.json
 └── tsconfig.json
 
- Install packages
+yaml
+Copy
+Edit
+
+---
+
+## ⚙️ Installation & Setup
+
+### 🔥 Install packages
+
+```bash
 npm install
- Run the app
+🚀 Run in development mode
+bash
+Copy
+Edit
 ng serve
-Open in browser at http://localhost:4200
-We can also run explicitly with the dev configuration:
+Then open http://localhost:4200 in your browser.
+
+Or explicitly with dev configuration:
+
+bash
+Copy
+Edit
 ng serve --configuration=development
-
-For production:
+🏗 Build for production
+bash
+Copy
+Edit
 ng build --configuration=production
+The build artifacts will be in the dist/ directory, optimized for performance.
 
+🛠 API Integration
+🎯 How API works
+The app queries TMDb’s API.
 
- Run tests
-ng test
-It launches Karma and opens results in browser.
+API requests are automatically intercepted by an Angular HTTP interceptor that adds a hard-coded Bearer token.
 
- Routing
-Uses Angular Router:
+🔑 Hard-coded AuthInterceptor
+Your AuthInterceptor file (src/app/auth-interceptor.ts):
+
+typescript
+Copy
+Edit
+import { HttpInterceptorFn } from '@angular/common/http';
+
+export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
+  const token = 'eyJhbGciOi...'; // your hard-coded JWT
+  if (token) {
+    req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
+  return next(req);
+};
+This means no need to store or fetch the token at runtime—every API request automatically includes it.
+
+🔎 Search Flow
+<app-movie-search>:
+Contains an input box & button, calls movieService.searchMovies(query) on search.
+
+<app-movie-card>:
+Displays each movie result, includes a routerLink to details.
+
+<app-movie-details>:
+Shows detailed info for the selected movie.
+
+🎨 UI & Styling
+Built with Bootstrap for:
+
+Navbar
+
+Responsive columns
+
+Cards & spacing
+
+Bootstrap loaded via angular.json:
+
+json
+Copy
+Edit
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/styles.css"
+]
+🚦 Routing
+Configured with Angular Router (app.routes.ts):
+
+typescript
+Copy
+Edit
 const routes = [
   { path: '', component: HomeComponent },
   { path: 'search', component: MovieSearch },
   { path: 'movie/:id', component: MovieDetails },
   { path: '**', redirectTo: '' }
 ];
-Defined in app.routes.ts and imported into main.ts.
+🧪 Testing
+✅ Unit Tests
+Written with Jasmine, executed by Karma.
 
- UI & Design
- Bootstrap
-Used for:
+To run:
 
-Navbar
-
-Responsive columns
-
-Cards
-
-Shadows & spacing
-
-Installed via:
-
-"styles": [
-  "node_modules/bootstrap/dist/css/bootstrap.min.css",
-  "src/styles.css"
-]
-
- Search Flow
-Components
-<app-movie-search>
-Contains an input & button, calls movieService.searchMovies(query).
-
-<app-movie-card>
-Displays each movie result.
-Includes routerLink to movie details.
-
- Movie Images
-Stored inside src/assets.
-
-Referenced in movies.ts like:
-
-poster_path: "assets/happy-times.png"
-Angular CLI automatically copies assets during build.
-
- Testing
- Jasmine & Karma
-Unit tests written with Jasmine in *.spec.ts files.
-
-Examples:
-
-it('should create the app', () => {
-  const fixture = TestBed.createComponent(App);
-  const app = fixture.componentInstance;
-  expect(app).toBeTruthy();
-});
-
-it('should render navbar text', () => {
-  const fixture = TestBed.createComponent(App);
-  fixture.detectChanges();
-  expect(fixture.nativeElement.textContent).toContain('Movie Discovery');
-});
-Run with:
+bash
+Copy
+Edit
 ng test
+Launches a browser showing test results.
+
+Sample unit tests check for:
+
+Component creation
+
+Correct rendering of navbar text
+
+AuthInterceptor adding headers
